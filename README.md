@@ -1,5 +1,3 @@
-`#html` `#css` `#js` `#dom` `#JSON` `#HTTP` `#API` `#Bootstrap` `#master-in-software-development`
-
 # Blog with API <!-- omit in toc -->
 
 <p>
@@ -22,7 +20,6 @@
 - You must use JSON server library to create your own local repository
 - You must use fecth to do the requests
 - You have to use Bootstrap Framework for the Layout and the styles
-
 
 ## Repository
 
