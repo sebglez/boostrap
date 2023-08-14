@@ -22,7 +22,19 @@ fetch("https://jsonplaceholder.typicode.com/posts", { method: "GET" })
             return res.json();
           })
           .then(function (data) {
-            console.log(data);
+            document.querySelector(".modal-title").textContent = data.title;
+            document.querySelector("#ideal").textContent = data.body;
+          });
+        fetch("https://jsonplaceholder.typicode.com/users/" + element.userId)
+          .then(function (usuario) {
+            return usuario.json();
+          })
+          .then(function (usu) {
+            const nombreusuario = document.querySelector(".juan");
+            nombreusuario.style.fontWeight = 1000;
+            nombreusuario.textContent = "User: " + usu.username;
+            const userMail = document.querySelector(".emilio");
+            userMail.textContent = usu.email;
           });
       });
     });
