@@ -1,3 +1,5 @@
+const btnComments = document.querySelector(".btn.btn-primary");
+
 fetch("https://jsonplaceholder.typicode.com/posts", { method: "GET" })
   .then(function (response) {
     return response.json();
@@ -24,6 +26,7 @@ fetch("https://jsonplaceholder.typicode.com/posts", { method: "GET" })
           .then(function (data) {
             document.querySelector(".modal-title").textContent = data.title;
             document.querySelector("#ideal").textContent = data.body;
+            btnComments.dataset.postId = element.id;
           });
         fetch("https://jsonplaceholder.typicode.com/users/" + element.userId)
           .then(function (usuario) {
@@ -37,6 +40,24 @@ fetch("https://jsonplaceholder.typicode.com/posts", { method: "GET" })
             userMail.textContent = usu.email;
           });
       });
+    });
+
+    btnComments.addEventListener("click", () => {
+      fetch(
+        `https://jsonplaceholder.typicode.com/posts/${btnComments.dataset.postId}/comments`
+      )
+        .then(function (post) {
+          return post.json();
+        })
+        .then(function (comments) {
+          comments.forEach((element) => {
+            const pComents = document.createElement("p");
+            pComents.className = "comContainer";
+            pComents.textContent = element.postId;
+            const comLabel = document.querySelector(".comLabel");
+            comLabel.appendChild(pComents);
+          });
+        });
     });
   });
 
