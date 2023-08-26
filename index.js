@@ -1,6 +1,6 @@
 const btnComments = document.querySelector(".btn.btn-primary");
 
-fetch("https://jsonplaceholder.typicode.com/posts", { method: "GET" })
+fetch(" http:///jsonplaceholder.typicode.com/posts", { method: "GET" })
   .then(function (response) {
     return response.json();
   })
@@ -19,7 +19,7 @@ fetch("https://jsonplaceholder.typicode.com/posts", { method: "GET" })
       pbody.textContent = element.body;
       li.appendChild(pbody);
       li.addEventListener("click", () => {
-        fetch("https://jsonplaceholder.typicode.com/posts/" + element.id)
+        fetch(" http:///jsonplaceholder.typicode.com/posts/" + element.id)
           .then(function (res) {
             return res.json();
           })
@@ -28,7 +28,7 @@ fetch("https://jsonplaceholder.typicode.com/posts", { method: "GET" })
             document.querySelector("#ideal").textContent = data.body;
             btnComments.dataset.postId = element.id;
           });
-        fetch("https://jsonplaceholder.typicode.com/users/" + element.userId)
+        fetch(" http:///jsonplaceholder.typicode.com/users/" + element.userId)
           .then(function (usuario) {
             return usuario.json();
           })
@@ -42,22 +42,34 @@ fetch("https://jsonplaceholder.typicode.com/posts", { method: "GET" })
       });
     });
 
+    var datosCargados = false;
+
     btnComments.addEventListener("click", () => {
-      fetch(
-        `https://jsonplaceholder.typicode.com/posts/${btnComments.dataset.postId}/comments`
-      )
-        .then(function (post) {
-          return post.json();
-        })
-        .then(function (comments) {
-          comments.forEach((element) => {
-            const pComents = document.createElement("p");
-            pComents.className = "comContainer";
-            pComents.textContent = element.postId;
-            const comLabel = document.querySelector(".comLabel");
-            comLabel.appendChild(pComents);
+      if (!datosCargados) {
+        fetch(
+          ` http:///jsonplaceholder.typicode.com/posts/${btnComments.dataset.postId}/comments`
+        )
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (comments) {
+            comments.forEach((element) => {
+              const pComents = document.createElement("p");
+              pComents.className = "comContainer";
+              pComents.textContent = element.body;
+              const comLabel = document.querySelector(".comLabel");
+              comLabel.appendChild(pComents);
+            });
+
+            datosCargados = true;
           });
-        });
+      }
+    });
+    const closeModalButton = document.querySelector(".modal .btn-close");
+    closeModalButton.addEventListener("click", () => {
+      datosCargados = false;
+      const comLabel = document.querySelector(".comLabel");
+      comLabel.innerHTML = ""; // Limpia los comentarios cuando se cierra la ventana modal
     });
   });
 
